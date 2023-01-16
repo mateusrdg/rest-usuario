@@ -1,6 +1,7 @@
 package br.com.usuario.service;
 
 import br.com.usuario.model.Usuario;
+import br.com.usuario.model.dto.UsuarioDto;
 
 public interface UsuarioService {
 
@@ -8,5 +9,5 @@ public interface UsuarioService {
 
     Usuario buscarPorid(Long id);
 
-    Usuario inserir(Usuario usuario);
+    Usuario inserir(UsuarioDto usuario);
 }

@@ -1,10 +1,13 @@
 package br.com.usuario.controller;
 
 import br.com.usuario.model.Usuario;
+import br.com.usuario.model.dto.UsuarioDto;
 import br.com.usuario.service.impl.UsuarioServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -24,7 +27,7 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<Usuario> inserir(@RequestBody Usuario usuario) {
-        return ResponseEntity.ok(usuarioService.inserir(usuario));
+    public ResponseEntity<Usuario> inserir(@RequestBody @Valid UsuarioDto usuarioDto) {
+        return ResponseEntity.ok(usuarioService.inserir(usuarioDto));
     }
 }

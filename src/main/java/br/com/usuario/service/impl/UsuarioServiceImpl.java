@@ -1,10 +1,13 @@
 package br.com.usuario.service.impl;
 
 import br.com.usuario.model.Usuario;
+import br.com.usuario.model.dto.UsuarioDto;
 import br.com.usuario.repository.UsuarioRepository;
 import br.com.usuario.service.UsuarioService;
 import br.com.usuario.service.exceptions.ObjectNotFoundException;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -13,7 +16,9 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UsuarioServiceImpl implements UsuarioService {
 
+    private ModelMapper modelMapper;
     private UsuarioRepository usuarioRepository;
+    private BCryptPasswordEncoder passwordEncoder;
 
 
     @Override
@@ -32,7 +37,13 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario inserir(Usuario usuario) {
+    public Usuario inserir(UsuarioDto usuarioDto) {
+        String senha = usuarioDto.getSenha();
+        System.out.println(senha);
+        String senhaCriptografada = passwordEncoder.encode(senha);
+        System.out.println(senhaCriptografada);
+        usuarioDto.setSenha(senhaCriptografada);
+        Usuario usuario = modelMapper.map(usuarioDto, Usuario.class);
         return usuarioRepository.save(usuario);
     }
 }
